@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://r0pjcqvfy7vt"]
+
+[ext_resource type="Texture2D" uid="uid://biip3k3d3tg7p" path="res://tappyplane/PNG/rockDown.png" id="1_h63gr"]
+[ext_resource type="Script" path="res://rock.gd" id="1_idtqc"]
+
+[node name="top_rock" type="Area2D" groups=["rocks"]]
+position = Vector2(1760, 71)
+scale = Vector2(0.75, 0.75)
+disable_mode = 2
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_idtqc")
+
+[node name="top_rock" type="Sprite2D" parent="."]
+position = Vector2(-0.999998, -0.999999)
+scale = Vector2(1.23148, 1.10251)
+texture = ExtResource("1_h63gr")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+polygon = PackedVector2Array(66, -132, 57, -65, 50, -59, 40, 17, 33, 17, 19, 128, 9, 129, -22, -6, -33, -12, -67, -131)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered" flags=3]
