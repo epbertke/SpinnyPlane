@@ -1,0 +1,116 @@
+[gd_scene load_steps=11 format=3 uid="uid://bj6b63uoc4jtq"]
+
+[ext_resource type="Script" path="res://flappyController.gd" id="1_pavya"]
+[ext_resource type="Script" path="res://spinny_sky.gd" id="2_o3o6o"]
+[ext_resource type="Texture2D" uid="uid://dt7swfudejy13" path="res://tappyplane/PNG/spinny_sky.png" id="5_ia0ge"]
+[ext_resource type="AudioStream" uid="uid://cpetth8ypftl0" path="res://sounds/impactPlate_light_001.ogg" id="6_f4vyj"]
+[ext_resource type="AudioStream" uid="uid://pe5outadksib" path="res://sounds/impactWood_medium_004.ogg" id="7_d3xai"]
+[ext_resource type="PackedScene" uid="uid://begbfnlftrv0k" path="res://plane.tscn" id="8_8jm4y"]
+[ext_resource type="AudioStream" uid="uid://dtsh5531oc218" path="res://sounds/Three Red Hearts - Box Jump.ogg" id="8_8mja1"]
+[ext_resource type="Script" path="res://animation_player.gd" id="8_xv7ym"]
+
+[sub_resource type="Animation" id="Animation_ambba"]
+resource_name = "slide_in"
+loop_mode = 2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.06667, 2.46667, 4.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"_ready"
+}, {
+"args": [0.0],
+"method": &"_process"
+}, {
+"args": [],
+"method": &"stay"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6kfwp"]
+_data = {
+"slide_in": SubResource("Animation_ambba")
+}
+
+[node name="spinnyplane" type="Node2D"]
+script = ExtResource("1_pavya")
+
+[node name="SpinnySky" type="ParallaxBackground" parent="."]
+scale = Vector2(2.68792, 1.13589)
+transform = Transform2D(2.68792, 0, 0, 1.13589, 0, 0)
+script = ExtResource("2_o3o6o")
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="SpinnySky"]
+motion_mirroring = Vector2(426, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="SpinnySky/ParallaxLayer"]
+show_behind_parent = true
+position = Vector2(212.238, 282.598)
+scale = Vector2(0.320693, 0.996514)
+texture = ExtResource("5_ia0ge")
+
+[node name="rock_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="sfx" type="Node2D" parent="."]
+
+[node name="bgm" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("8_8mja1")
+autoplay = true
+
+[node name="thud" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("6_f4vyj")
+volume_db = 24.0
+
+[node name="flap" type="AudioStreamPlayer2D" parent="sfx"]
+stream = ExtResource("7_d3xai")
+volume_db = 24.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Replay" type="Button" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = 418.0
+offset_top = 434.0
+offset_right = 786.0
+offset_bottom = 571.0
+theme_override_font_sizes/font_size = 50
+text = "Play Again"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
+libraries = {
+"": SubResource("AnimationLibrary_6kfwp")
+}
+script = ExtResource("8_xv7ym")
+
+[node name="GameOver" type="Label" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = 292.0
+offset_top = 98.0
+offset_right = 835.0
+offset_bottom = 235.0
+theme_override_colors/font_color = Color(5.96821e-06, 0.608256, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "Game Over"
+
+[node name="plane" parent="." instance=ExtResource("8_8jm4y")]
+position = Vector2(158, 427)
+
+[connection signal="timeout" from="rock_timer" to="." method="_on_rock_timer_timeout"]
+[connection signal="button_down" from="Control/Replay" to="." method="_on_button_button_down"]
+[connection signal="pressed" from="Control/Replay" to="." method="_on_replay_pressed"]

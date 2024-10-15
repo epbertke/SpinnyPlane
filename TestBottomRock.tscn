@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://qrj87cii4rr7"]
+
+[ext_resource type="Texture2D" uid="uid://cj4qlcn1c4g2c" path="res://tappyplane/PNG/rock.png" id="1_7w5q6"]
+[ext_resource type="Script" path="res://test_bottom_rock.gd" id="1_khg58"]
+
+[node name="TestBottomRock" type="Area2D"]
+script = ExtResource("1_khg58")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7w5q6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-53, 114, 12, -116, 50, 114)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

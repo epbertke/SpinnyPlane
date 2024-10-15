@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://4ohm2xt1dqhg"]
+
+[ext_resource type="Script" path="res://test_bottom_rock.gd" id="1_pnebm"]
+[ext_resource type="Texture2D" uid="uid://biip3k3d3tg7p" path="res://tappyplane/PNG/rockDown.png" id="2_e4kfx"]
+
+[node name="TestRockTest" type="Area2D"]
+script = ExtResource("1_pnebm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_e4kfx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-10, -156)
+scale = Vector2(0.835337, 0.35676)
+polygon = PackedVector2Array(-52, 114, 23.9424, 762.418, 75.4187, 117.726)
